@@ -54,13 +54,6 @@ const login = ({ username, password }) => new Promise(async (resolve, reject) =>
                 password: undefined
             }
         })
-        // if (token) {
-        //     await model.User.update({
-        //         accessToken: token
-        //     }, {
-        //         where: { id: user.id }
-        //     })
-        // }
     } catch (error) {
         reject(error)
     }

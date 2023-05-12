@@ -9,6 +9,23 @@ const getAll = async () => {
     return users;
 }
 
+// const getAllByChatId = async (roomId) => {
+//     const users = await model.User.findAll({
+//         attributes: ['username'],
+//         include: [{
+//             model: model.Chat,
+//             through: {
+//                 model: model.chatusermapping,
+//                 where: {
+//                     roomId: roomId
+//                 }
+//             },
+//             required: true
+//         }]        
+//     });
+//     return users;
+// }
+
 const createOrUpdateNickname = async (id, nickname) => {
     const result = await model.User.update(
         nickname

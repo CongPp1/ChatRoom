@@ -13,6 +13,16 @@ const getAllUsers = async (req, res, next) => {
     }
 }
 
+const getUsersByChatId = async (req, res, next) => {
+    try {
+        const users = await userServices.getAllByChatId(Number(req.params.id));
+        return res.status(200).send({ message: 'Success', data: users });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({ message: 'Error', error: error.message})
+    }
+}
+
 const createOrUpdateNickname = async (req, res, next) => {
     try {
         const { nickname } = req.body;
@@ -28,4 +38,4 @@ const createOrUpdateNickname = async (req, res, next) => {
     }
 }
 
-module.exports = { getAllUsers, createOrUpdateNickname };
+module.exports = { getAllUsers, createOrUpdateNickname, getUsersByChatId };
