@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.User.belongsToMany(models.Chat, { through: chatusermapping, foreignKey: 'roomId', targetKey: 'id', onDelete: 'CASCADE' });
-      models.Chat.belongsToMany(models.User, { through: chatusermapping, foreignKey: 'userId', targetKey: 'id', onDelete: 'CASCADE' });
+      models.User.belongsToMany(models.Chat, { through: chatusermapping, foreignKey: 'userId', targetKey: 'id', onDelete: 'CASCADE' });
+      models.Chat.belongsToMany(models.User, { through: chatusermapping, foreignKey: 'roomId', targetKey: 'id', onDelete: 'CASCADE' });
     }
   }
   chatusermapping.init({

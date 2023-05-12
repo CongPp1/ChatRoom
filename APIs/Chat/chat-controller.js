@@ -50,21 +50,32 @@ const addChat = async (req, res, next) => {
 
 const updateChattingContext = async (req, res, next) => {
     try {
-        const roomChat = Number(req.params.id);
-        const getChatRoom = await chatServices.getOne(roomChat)
-        const updateChat = await chatServices.update(getChatRoom.id, req.body);
-        if (req.body.userId !== null) {
-            await getChatRoom.setUsers(req.body.userId)
-        };
-        if (updateChat) {
-            const result = await chatServices.getOne(getChatRoom.id);
-            return res.status(200).send({ message: 'Success' });
+      const roomId = Number(req.params.id);
+      const chatRoom = await model.Chat.findOne({ where: { id: roomId } });
+      if (!chatRoom) {
+        return res.status(404).json({ message: 'Chat room not found' });
+      }
+      const updateResult = await chatRoom.update(req.body);
+      if (req.body.userId !== null) {
+        const user = await model.User.findByPk(req.body.userId);
+        if (user) {
+          await chatRoom.addUser(user);
+        } else {
+          return res.status(404).json({ message: 'User not found' });
         }
+      }
+      if (updateResult) {
+        const updatedChatRoom = await model.Chat.findOne({
+          where: { id: chatRoom.id },
+          include: [{ model: model.User, attributes: ['username'] }],
+        });
+        return res.status(200).json({ message: 'Success', chat: updatedChatRoom });
+      }
     } catch (error) {
-        console.log(error);
-        return res.status(500).send({ message: 'Error', error: error.message });
+      console.log(error);
+      return res.status(500).json({ message: 'Error', error: error.message });
     }
-}
+  };
 
 const removeUserFromChat = async (req, res, next) => {
     try {
