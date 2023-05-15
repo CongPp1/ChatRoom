@@ -38,4 +38,14 @@ const createOrUpdateNickname = async (req, res, next) => {
     }
 }
 
-module.exports = { getAllUsers, createOrUpdateNickname, getUsersByChatId };
+const saveGeoLocation = async (req, res, next) => {
+    try {
+        const result = await userServices.saveGeoLocation(Number(req.params.id), req.body)
+        return res.status(200).send({ message: 'Success'})
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({message: 'Error', error: error.message})
+    }
+}
+
+module.exports = { getAllUsers, createOrUpdateNickname, getUsersByChatId, saveGeoLocation };

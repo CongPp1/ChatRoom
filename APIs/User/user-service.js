@@ -34,4 +34,12 @@ const createOrUpdateNickname = async (id, nickname) => {
         })
     return result;
 }
-module.exports = { getAll, createOrUpdateNickname }
+
+const saveGeoLocation = async (id, geoLocation) => {
+    const result = await model.User.update(
+        geoLocation,
+        { where: { id } }
+    )
+}
+
+module.exports = { getAll, createOrUpdateNickname, saveGeoLocation }
