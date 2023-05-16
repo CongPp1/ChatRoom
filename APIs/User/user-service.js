@@ -36,10 +36,22 @@ const createOrUpdateNickname = async (id, nickname) => {
 }
 
 const saveGeoLocation = async (id, geoLocation) => {
+    console.log('user-service.js - line 39');
+    console.log(id);
     const result = await model.User.update(
         geoLocation,
         { where: { id } }
     )
+    // console.log(result);
+    return result;
 }
 
-module.exports = { getAll, createOrUpdateNickname, saveGeoLocation }
+const out = async (id) => {
+    const result = await model.User.update(
+        { isActive: false},
+        { where: { id }}
+    )
+    return result;
+}
+
+module.exports = { getAll, createOrUpdateNickname, saveGeoLocation, out }
