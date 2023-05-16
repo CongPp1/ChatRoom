@@ -10,7 +10,7 @@ const getOne = async (roomId) => {
         where: { id: roomId },
         include: [{
             model: model.User,
-            attributes: ['username', 'geoLocation']
+            attributes: ['username', 'geoLocation', 'isActive']
         }],
 
     });
