@@ -6,13 +6,13 @@ const getAll = async () => {
 }
 
 const getOne = async (roomId) => {
-    const chat = await model.Chat.findAll({
+    const chat = await model.Chat.findOne({
         where: { id: roomId },
         include: [{
             model: model.User,
             attributes: ['username', 'geoLocation']
         }],
-        
+
     });
     return chat
 }
@@ -31,7 +31,7 @@ const removeChat = async (id) => {
 
 const removeUserFromChat = async (roomId, userId) => {
     const result = await model.chatusermapping.destroy({
-        where: { roomId: roomId, userId: userId},
+        where: { roomId: roomId, userId: userId },
     })
     return result;
 }
