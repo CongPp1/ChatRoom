@@ -65,8 +65,7 @@ const addUserIntoChattingContext = async (req, res, next) => {
                 //     return res.status(400).send({ message: 'User is already in chat room' });
                 // }
                 await chatRoom.addUser(user);
-               const user1 = await model.User.update({isActive: true},{where :{id: req.body.userId}});
-            //    console.log('user1', req.body.userId)
+                const updateActiveStatus = await model.User.update({ isActive: true }, { where: { id: req.body.userId } });
             } else {
                 return res.status(404).json({ message: 'User not found' });
             }
@@ -74,7 +73,7 @@ const addUserIntoChattingContext = async (req, res, next) => {
         if (updateResult) {
             const updatedChatRoom = await model.Chat.findOne({
                 where: { id: chatRoom.id },
-                include: [{ model: model.User, attributes: ['username'] }],
+                include: [{ model: model.User, attributes: ['username', 'isActive'] }],
             });
             return res.status(200).json({ message: 'Success', chat: updatedChatRoom });
         }
