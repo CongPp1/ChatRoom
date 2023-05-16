@@ -6,9 +6,13 @@ const getAll = async () => {
 }
 
 const getOne = async (roomId) => {
-    const chat = await model.chatusermapping.findAll({
-        where: { roomId: roomId },
-        attributes: ['userId']
+    const chat = await model.Chat.findAll({
+        where: { id: roomId },
+        include: [{
+            model: model.User,
+            attributes: ['username', 'geoLocation']
+        }],
+        
     });
     return chat
 }
